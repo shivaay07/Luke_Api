@@ -8,7 +8,7 @@ import {useState} from 'react'
 import {useHistory} from 'react-router-dom'
 
 function App() {
-    const [name, setName] = useState('');
+    const [name, setName] = useState('people');
     const [id, setId] = useState('');
     const history = useHistory();
 

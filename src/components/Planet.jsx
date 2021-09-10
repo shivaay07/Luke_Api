@@ -30,7 +30,7 @@ const Planet = (props) => {
             <h3>Climate: {planet.climate}</h3>
             <h3>Terrain: {planet.terrain}</h3>
             <h3>Surface Water: {planet.surface_water?<span>true</span>:<span>false</span>}</h3>
-            <h3>Population: {planet.population}</h3>
+            <h3>Population: {new Intl.NumberFormat().format(planet.population)}</h3>
         </fieldset>
     )
 }

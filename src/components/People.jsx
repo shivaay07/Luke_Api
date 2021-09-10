@@ -7,7 +7,8 @@ import kenobi from './kenobi.jpg'
 
 const People = (props) => {
     const [people, setPeople] = useState([]);
-    const [peoplehome, setPeoplehome] = useState({});
+    const [peoplehome, setPeoplehome] = useState('');
+    const [planetId, setPlanetId] = useState('');
     // const [name, setName] = useState('');
     // const [id, setId] = useState('');
     // const [selector, setSelector] = useState();
@@ -29,20 +30,28 @@ const People = (props) => {
                 )
         }, [idVar]
     )
-
+    
     useEffect(
         () => {
-            axios.get('https://swapi.dev/api/planets/' + idVar)
+            people?
+            
+            axios.get(people.homeworld)
                 .then(getRespone => {
                     console.log(getRespone.data)
-                    setPeoplehome(getRespone.data)
-
+                    setPeoplehome(getRespone.data.name)
+                    console.log(`this is people.homeworld ${people.homeworld}`)
+                    // converting the url to array
+                    let arr = people.homeworld.split("/")
+                    console.log(arr);
+                    // set planet to arr where index is [arr.length-2]
+                    setPlanetId(arr[arr.length-2])
                 })
                 .catch(
                     (error) => {
                         setPeople(null)
                     }
-                )
+                ):
+                console.log("Loading")
         }, [idVar]
     )
     let content = (
@@ -56,8 +65,8 @@ const People = (props) => {
                     <h4><span style={{fontWeight:'bold'}}>Mass:  </span>{people.mass}</h4>
                     <h4><span style={{fontWeight:'bold'}}>Hair Color:  </span>{people.hair_color}</h4>
                     <h4><span style={{fontWeight:'bold'}}>Skin Color:  </span>{people.skin_color}</h4>
-                    <h4><span style={{fontWeight:'bold'}}>Home World:  </span>{peoplehome.name}</h4>
-                    <h4><Link to= {'/planets/'+idVar}>Homeworld</Link></h4>
+                    <h4><span style={{fontWeight:'bold'}}>Home World:  </span>{peoplehome}</h4>
+                    <h4><Link to= {'/planets/'+planetId}>Homeworld</Link></h4>
             </fieldset>:
             <label htmlFor="img">No droids<img src={kenobi} alt='There arent droids'/></label>
             }
